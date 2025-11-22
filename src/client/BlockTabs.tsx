@@ -40,12 +40,21 @@ import {
   useToken,
 } from '@nocobase/client';
 import { usePluginTranslation } from './locale';
+import { useBlockTabsStyle, useBlockTabsGlobalStyle } from './BlockTabs.style';
 
 const MemoizeRecursionField = React.memo(RecursionField);
 MemoizeRecursionField.displayName = 'MemoizeRecursionField';
 
 const MemoizeTabs = React.memo(AntdTabs);
 MemoizeTabs.displayName = 'MemoizeTabs';
+
+// 定义 BlockTabs 的类型，包含 TabPane 属性
+interface BlockTabsComponent extends React.MemoExoticComponent<(props: any) => JSX.Element> {
+  TabPane: React.ComponentType<TabPaneProps & { icon?: any; hidden?: boolean }> & {
+    displayName?: string;
+    Designer?: React.ComponentType;
+  };
+}
 
 export const BlockTabs = React.memo((props: any) => {
   const fieldSchema = useFieldSchema();
@@ -54,6 +63,9 @@ export const BlockTabs = React.memo((props: any) => {
   const { isMobileLayout } = useMobileLayout();
   const { t } = useTranslation();
   const { token } = useToken();
+  // 注册全局样式，为菜单直接打开的页面中的 tabs 添加 padding
+  useBlockTabsStyle();
+  useBlockTabsGlobalStyle();
 
   const items = useMemo(() => {
     const result = fieldSchema.mapProperties((schema: Schema, key: string) => {
@@ -134,6 +146,9 @@ export const BlockTabs = React.memo((props: any) => {
 
 BlockTabs.displayName = 'BlockTabs';
 
+// 类型断言，使 TypeScript 知道 BlockTabs 有 TabPane 属性
+const BlockTabsWithTabPane = BlockTabs as BlockTabsComponent;
+
 const designerCss = css`
   position: relative;
   &:hover {
@@ -181,7 +196,7 @@ const designerCss = css`
   }
 `;
 
-BlockTabs.TabPane = withDynamicSchemaProps(
+BlockTabsWithTabPane.TabPane = withDynamicSchemaProps(
   observer(
     (props: TabPaneProps & { icon?: any; hidden?: boolean }) => {
       const Designer = useDesigner();
@@ -203,15 +218,16 @@ BlockTabs.TabPane = withDynamicSchemaProps(
   ),
 );
 
-BlockTabs.TabPane.displayName = 'BlockTabs.TabPane';
+BlockTabsWithTabPane.TabPane.displayName = 'BlockTabs.TabPane';
 
 const TabPaneDesigner = () => {
   const field = useField();
   const fieldSchema = useFieldSchema();
   const { dn } = useDesignable();
   const { t } = usePluginTranslation();
+  const GeneralSchemaDesignerWithChildren = GeneralSchemaDesigner as React.FC<{ disableInitializer?: boolean; children?: React.ReactNode }>;
   return (
-    <GeneralSchemaDesigner disableInitializer>
+    <GeneralSchemaDesignerWithChildren disableInitializer>
       <SchemaSettingsModalItem
         key="edit"
         title={t('Edit')}
@@ -256,10 +272,10 @@ const TabPaneDesigner = () => {
       />
       <SchemaSettingsDivider />
       <SchemaSettingsRemove />
-    </GeneralSchemaDesigner>
+    </GeneralSchemaDesignerWithChildren>
   );
 };
 
-BlockTabs.TabPane.Designer = TabPaneDesigner;
+BlockTabsWithTabPane.TabPane.Designer = TabPaneDesigner;
 
 export default BlockTabs;

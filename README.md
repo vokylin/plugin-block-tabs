@@ -31,10 +31,17 @@
 - **🌐 Internationalization**: Built-in i18n support (English, Chinese)
 - **🔧 Schema-Driven**: Fully integrated with NocoBase's schema system
 - **♿ Accessible**: Follows accessibility best practices
+- **♾️ Infinite Nesting**: **Tabs can be nested infinitely** - you can create tabs within tabs within tabs, allowing for unlimited levels of organization!
 
 ## 📸 Screenshots
 
-> _Screenshots coming soon. Contributions welcome!_
+### 🎯 Infinite Nesting Support
+
+**Block Tabs supports infinite nesting!** You can create tabs within tabs within tabs, allowing for unlimited levels of content organization. This powerful feature enables you to build complex, hierarchical interfaces with ease.
+
+![Block Tabs Demo - Infinite Nesting](./demo.png)
+
+> 💡 **Tip**: You can nest Block Tabs components as deep as you need. Each tab can contain another Block Tabs component, creating a powerful hierarchical structure for organizing your content.
 
 ## 🚀 Installation
 
@@ -298,7 +305,15 @@ See the [LICENSE](LICENSE) file for details.
 
 ## 中文文档
 
-nocobase页面内标签页区块，可提供选项卡式界面组件，用于整合多个区块内容，减少页面滚动操作，提升内容整理效率。详细的中文安装和使用说明，请参阅 [INSTALL.md](./INSTALL.md)。
+nocobase页面内标签页区块，可提供选项卡式界面组件，用于整合多个区块内容，减少页面滚动操作，提升内容整理效率。详细的中文安装和使用说明，请参阅 [INSTALL.md](./INSTALL.md).
+
+### 🎯 无限嵌套支持
+
+**Block Tabs 支持无限嵌套！** 您可以在标签页中创建标签页，再在标签页中创建标签页，实现无限层级的嵌套结构。这个强大的功能让您能够轻松构建复杂的层次化界面。
+
+![Block Tabs 演示 - 无限嵌套](./demo.png)
+
+> 💡 **提示**：您可以根据需要无限嵌套 Block Tabs 组件。每个标签页都可以包含另一个 Block Tabs 组件，从而创建强大的层次结构来组织您的内容。
 
 ### 快速开始
 
